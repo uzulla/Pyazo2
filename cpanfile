@@ -13,6 +13,17 @@ requires 'Test::WWW::Mechanize::PSGI';
 requires 'Text::Xslate', '2.0009';
 requires 'Time::Piece', '1.20';
 requires 'perl', '5.010_001';
+requires 'File::Slurp';
+requires 'Time::HiRes';
+requires 'String::Random';
+requires 'File::Basename';
+requires 'Image::Info';
+requires 'File::Path';
+requires 'Media::Type::Simple';
+requires 'LWP::UserAgent';
+requires 'Path::Tiny';
+requires 'File::Temp';
+
 
 on configure => sub {
     requires 'Module::Build', '0.38';
