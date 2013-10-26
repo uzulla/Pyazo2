@@ -2,31 +2,74 @@
 
 : override content -> {
 
-<h1>pyazo</h1>
-<h2>Gyazo:</h2>
-<form action="/" method="post" enctype="multipart/form-data">
-<input type='file' name='imagedata'>
-<input type='submit'>
-</form>
-<h2>Gyazo(post from url):</h2>
-<form action="/" method="post">
-<input type='text' name='fileurl'>
-<input type='submit'>
-</form>
-<h2>Gifzo(mp4 only):</h2>
-<form action="/" method="post" enctype="multipart/form-data">
-<input type='file' name='data'>
-<input type='submit'>
-</form>
+<div class="panel panel-default">
+  <div class="panel-heading" style="font-weight:bold">Gyazo :</div>
+  <div class="panel-body">
+    <form role="form" action="/" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Image(or more) File</label>
+        <input type='file' name='imagedata' style="width:300px">
+      </div>
+      <button type="submit" class="btn btn-default">upload</button>
+    </form>
+  </div>
+</div>
 
-<h2>how to use gyazo client</h2>
-please edit gyazo to
-<pre>
-HOST = 'yairc.cfe.jp'
-CGI = '/'
-UA   = 'Gyazo/1.0'
-and
-Net::HTTP.start(HOST,5000){|http|
-</pre>
+<div class="panel panel-default">
+  <div class="panel-heading" style="font-weight:bold">Gyazo(post from url):</div>
+  <div class="panel-body">
+    <form role="form" action="/" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Image(or more) File URL</label><br>
+        <input type='text' name='fileurl' style="width:400px">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading" style="font-weight:bold">Gifzo(mp4 only):</div>
+  <div class="panel-body">
+    <form role="form" action="/" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Image(or more) File URL</label>
+        <input type='file' name='data' style="width:300px">
+      </div>
+      <button type="submit" class="btn btn-default">upload</button>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading" style="font-weight:bold">how to use with gyazo client</div>
+  <div class="panel-body">
+    please edit gyazo to
+    <pre>
+    HOST = 'yairc.cfe.jp'
+    CGI = '/'
+    UA   = 'Gyazo/1.0'
+    * yairc.cfe.jp change your host
+    </pre>
+    and
+    <pre>
+    Net::HTTP.start(HOST,5000){|http|
+    # 5000 change your port
+    </pre>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading" style="font-weight:bold">how to use with gifzo client</div>
+  <div class="panel-body">
+    please run in shell
+    <pre>
+    defaults write net.gifzo.Gifzo url -string "http://hostname:5000/"
+    </pre>
+    * windows? oh i dont know.
+  </div>
+</div>
+
+
 
 : }
