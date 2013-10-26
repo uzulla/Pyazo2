@@ -22,6 +22,9 @@ my $app = builder {
     enable 'Plack::Middleware::Static',
         path => qr{^(?:/robots\.txt|/favicon\.ico)$},
         root => File::Spec->catdir(dirname(__FILE__), '..', 'static');
+    enable 'Plack::Middleware::Static',
+        path => qr{^(?:/image/)},
+        root => File::Spec->catdir(dirname(__FILE__), '..');
     enable 'Plack::Middleware::ReverseProxy';
 
     # If you want to run the app on multiple servers,

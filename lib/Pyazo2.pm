@@ -30,6 +30,10 @@ sub db {
     $c->{db};
 }
 
+sub randstr{
+    String::Random->new->randregex('[A-Za-z0-9]{16}') . Time::HiRes::time()*100000 ;
+}
+
 1;
 __END__
 

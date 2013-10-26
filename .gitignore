@@ -16,3 +16,6 @@ MYMETA.yml
 /_build/
 /local/
 /.carton/
+/image/
+!/image/.gitkeep
+
