@@ -116,6 +116,7 @@
     </div>
 </div>
 
+: if $support.gifzo {
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:bold">Gifzo(mp4 only):</div>
     <div class="panel-body">
@@ -128,6 +129,7 @@
         </form>
     </div>
 </div>
+: }
 
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:bold">how to use with gyazo client</div>
@@ -141,6 +143,7 @@ UA   = 'Gyazo/1.0'</pre>
     </div>
 </div>
 
+: if $support.gifzo {
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:bold">how to use with gifzo client</div>
     <div class="panel-body">
@@ -149,6 +152,6 @@ UA   = 'Gyazo/1.0'</pre>
         * windows? sorry i don't know.
     </div>
 </div>
-
+: }
 
 : }

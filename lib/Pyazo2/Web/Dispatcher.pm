@@ -19,10 +19,22 @@ use feature 'say';
 
 get '/' => sub {
     my ($c) = @_;
+
+    my $gifzo_support = (
+      $c->config->{external_commands}->{ffmpeg_path} &&
+      (
+        $c->config->{external_commands}->{gifsicle_path} ||
+        $c->config->{external_commands}->{imagemagick_convert_path}
+      )
+    );
+
     return $c->render('index.tx' => +{
       host_info => +{
-        'hostname'=> $c->req->uri->host,
-        'port'=> 5000
+        hostname => $c->req->uri->host,
+        port => 5000
+      },
+      support => +{
+        gifzo => $gifzo_support
       }
     });
 };
