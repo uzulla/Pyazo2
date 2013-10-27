@@ -61,8 +61,8 @@
                     success: function(data){
                         $("#file_dnd_uploaded").show();
                         $("#file_dnd_box").removeClass('send');
-                        var li = $("<li></li>").text(data);
-                        $("#file_dnd_uploaded").append(li);
+                        var input = $("<input type='text' onclick='this.select()' style='width:100%'></li>").val(data);
+                        $("#file_dnd_uploaded").append(input);
                     },
                     error: function(){
                         alert('Fail upload');
