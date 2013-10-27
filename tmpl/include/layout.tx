@@ -43,7 +43,7 @@
             <: block content -> { } :>
         </div>
         <footer class="footer">
-            Powered by <a href="http://amon.64p.org/">Amon2</a>
+            <a href="https://github.com/uzulla/Pyazo2">Github/uzulla/Pyazo2</a>
         </footer>
     </div>
 </body>

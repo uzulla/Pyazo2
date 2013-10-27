@@ -132,18 +132,12 @@
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:bold">how to use with gyazo client</div>
     <div class="panel-body">
-        please edit gyazo to
-    <pre>
-    HOST = 'yairc.cfe.jp'
-    CGI = '/'
-    UA   = 'Gyazo/1.0'
-    * yairc.cfe.jp change your host
-    </pre>
-        and
-    <pre>
-    Net::HTTP.start(HOST,5000){|http|
-    # 5000 change your port
-    </pre>
+        please edit bellow in "Gyazo.app/Contents/MacOS/Gyazo"
+    <pre>HOST = '<: $host_info.hostname :>'
+CGI = '/'
+UA   = 'Gyazo/1.0'</pre>
+        and (port number)
+    <pre>Net::HTTP.start(HOST,<: $host_info.port :>){|http|</pre>
     </div>
 </div>
 
@@ -151,10 +145,8 @@
     <div class="panel-heading" style="font-weight:bold">how to use with gifzo client</div>
     <div class="panel-body">
         please run in shell
-    <pre>
-    defaults write net.gifzo.Gifzo url -string "http://hostname:5000/"
-    </pre>
-        * windows? oh i dont know.
+    <pre>defaults write net.gifzo.Gifzo url -string "http://<: $host_info.hostname :><: $host_info.port == 80 ? "" : ":"~$host_info.port :>/"</pre>
+        * windows? sorry i don't know.
     </div>
 </div>
 

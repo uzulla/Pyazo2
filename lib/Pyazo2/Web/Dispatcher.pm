@@ -19,7 +19,12 @@ use feature 'say';
 
 get '/' => sub {
     my ($c) = @_;
-    return $c->render('index.tx');
+    return $c->render('index.tx' => +{
+      host_info => +{
+        'hostname'=> $c->req->uri->host,
+        'port'=> 5000
+      }
+    });
 };
 
 post '/' => sub {
