@@ -18,5 +18,6 @@ my $dbpath = File::Spec->catfile($basedir, 'db', 'development.db');
         "force_use_gif_in_temporary" => 0,
         "frame_rate" => 3,
         "frame_delay" => 10,
+        "allow_cross_site_domain" => "*",
     }
 };

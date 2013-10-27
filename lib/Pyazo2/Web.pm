@@ -43,6 +43,9 @@ __PACKAGE__->add_trigger(
 
         # Cache control.
         $res->header( 'Cache-Control' => 'private' );
+
+        # allow cross site request
+        $res->header( 'Access-Control-Allow-Origin' => $c->config->{settings}->{allow_cross_site_domain} );
     },
 );
 
