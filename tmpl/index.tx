@@ -3,73 +3,160 @@
 : override content -> {
 
 <div class="panel panel-default">
-  <div class="panel-heading" style="font-weight:bold">Gyazo :</div>
-  <div class="panel-body">
-    <form role="form" action="/" method="post" enctype="multipart/form-data">
-      <div class="form-group">
-        <label>Image(or more) File</label>
-        <input type='file' name='imagedata' style="width:300px">
-      </div>
-      <button type="submit" class="btn btn-default">upload</button>
-    </form>
-  </div>
+    <div class="panel-heading" style="font-weight:bold">Gyazo :</div>
+    <div class="panel-body">
+        <form role="form" action="/" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Image(or more) File</label>
+                <input type='file' name='imagedata'>
+            </div>
+            <button type="submit" class="btn btn-default">upload</button>
+        </form>
+        <hr>
+        ... or Drag and drop file bellow box.
+        <div id="file_dnd_box">
+            Drop file here!!
+        </div>
+        <ul id="file_dnd_uploaded">
+            <li>uploaded file url.</li>
+        </ul>
+
+        <style>
+            #file_dnd_box {
+                padding: 30px;
+                width: 100%;
+                background-color: gray;
+                vertical-align: middle;
+                text-align: center;
+                color: white
+            }
+            #file_dnd_box.on {
+                background-color: green;
+            }
+            #file_dnd_box.send {
+                background-color: red;
+            }
+            #file_dnd_uploaded{
+                list-style: none;
+                display:none;
+                padding:0px;
+            }
+        </style>
+        <script>
+
+            function handleFileSelect(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                $(e.target).removeClass('on');
+                $(e.target).addClass('send');
+
+                var files = e.dataTransfer.files; // FileList object.
+
+                if(files.length!=1){
+                    alert('allow only one file in upload.');
+                    return;
+                }
+
+                var data = new FormData();
+                data.append('imagedata', files[0]);
+
+                $.ajax({
+                    url: "/",
+                    type: "POST",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    dataType: "text",
+                    success: function(data){
+                        $("#file_dnd_uploaded").show();
+                        $("#file_dnd_box").removeClass('send');
+                        var li = $("<li></li>").text(data);
+                        $("#file_dnd_uploaded").append(li);
+                    },
+                    error: function(){
+                        alert('Fail upload');
+                        $("#file_dnd_box").removeClass('send').removeClass('on');
+                    }
+                });
+
+            }
+
+            function handleDragOver(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+                $(e.target).addClass('on');
+            }
+
+            function handleDragLeave(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                $(e.target).removeClass('on');
+            }
+
+            // Setup the dnd listeners.
+            var dropZone = document.getElementById('file_dnd_box');
+            dropZone.addEventListener('dragover', handleDragOver, false);
+            dropZone.addEventListener('drop', handleFileSelect, false);
+            dropZone.addEventListener('dragleave', handleDragLeave, false);
+        </script>
+    </div>
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading" style="font-weight:bold">Gyazo(post from url):</div>
-  <div class="panel-body">
-    <form role="form" action="/" method="post" enctype="multipart/form-data">
-      <div class="form-group">
-        <label>Image(or more) File URL</label><br>
-        <input type='text' name='fileurl' style="width:400px">
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-  </div>
+    <div class="panel-heading" style="font-weight:bold">Gyazo(post from url):</div>
+    <div class="panel-body">
+        <form role="form" action="/" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Image(or more) File URL</label><br>
+                <input type='text' name='fileurl' style="width:100%">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading" style="font-weight:bold">Gifzo(mp4 only):</div>
-  <div class="panel-body">
-    <form role="form" action="/" method="post" enctype="multipart/form-data">
-      <div class="form-group">
-        <label>Image(or more) File URL</label>
-        <input type='file' name='data' style="width:300px">
-      </div>
-      <button type="submit" class="btn btn-default">upload</button>
-    </form>
-  </div>
+    <div class="panel-heading" style="font-weight:bold">Gifzo(mp4 only):</div>
+    <div class="panel-body">
+        <form role="form" action="/" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Image(or more) File URL</label>
+                <input type='file' name='data'>
+            </div>
+            <button type="submit" class="btn btn-default">upload</button>
+        </form>
+    </div>
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading" style="font-weight:bold">how to use with gyazo client</div>
-  <div class="panel-body">
-    please edit gyazo to
+    <div class="panel-heading" style="font-weight:bold">how to use with gyazo client</div>
+    <div class="panel-body">
+        please edit gyazo to
     <pre>
     HOST = 'yairc.cfe.jp'
     CGI = '/'
     UA   = 'Gyazo/1.0'
     * yairc.cfe.jp change your host
     </pre>
-    and
+        and
     <pre>
     Net::HTTP.start(HOST,5000){|http|
     # 5000 change your port
     </pre>
-  </div>
+    </div>
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading" style="font-weight:bold">how to use with gifzo client</div>
-  <div class="panel-body">
-    please run in shell
+    <div class="panel-heading" style="font-weight:bold">how to use with gifzo client</div>
+    <div class="panel-body">
+        please run in shell
     <pre>
     defaults write net.gifzo.Gifzo url -string "http://hostname:5000/"
     </pre>
-    * windows? oh i dont know.
-  </div>
+        * windows? oh i dont know.
+    </div>
 </div>
-
 
 
 : }
