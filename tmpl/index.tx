@@ -4,7 +4,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:bold">Gyazo :</div>
-    <div class="panel-body">
+    <div class="panel-body" id="file_dnd_box">
         <form role="form" action="/" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Image(or more) File</label>
@@ -13,22 +13,13 @@
             <button type="submit" class="btn btn-default">upload</button>
         </form>
         <hr>
-        ... or Drag and drop file bellow box.
-        <div id="file_dnd_box">
-            Drop file here!!
-        </div>
+        ... or Drag and drop here.
         <ul id="file_dnd_uploaded">
             <li>uploaded file url.</li>
         </ul>
 
         <style>
             #file_dnd_box {
-                padding: 30px;
-                width: 100%;
-                background-color: gray;
-                vertical-align: middle;
-                text-align: center;
-                color: white
             }
             #file_dnd_box.on {
                 background-color: green;
