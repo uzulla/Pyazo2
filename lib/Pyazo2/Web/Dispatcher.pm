@@ -16,6 +16,8 @@ use Data::Dumper;
 use Path::Tiny;
 use File::Temp qw/ tempfile tempdir /;
 use feature 'say';
+use Imager;
+use Imager::Filter::ExifOrientation;
 
 get '/' => sub {
     my ($c) = @_;
@@ -56,9 +58,18 @@ post '/' => sub {
             }
             $type = '.'.$img_info->{file_type};
         }
-        $filename = "image/" . Pyazo2::randstr() . lc($type);
 
-        path($upload->path)->move($c->base_dir.'/'.$filename);
+        $filename = "image/" . Pyazo2::randstr() . lc($type);
+        my $dist_path = path($c->base_dir.'/'.$filename)->realpath;
+        path($upload->path)->move($dist_path);
+
+        # fix jpeg orientation
+        if(lc($type) eq '.jpg' || lc($type) eq '.jpeg'){ 
+            my $img = Imager->new;
+            $img->read( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
+            $img->filter( type => 'exif_orientation' ) or die $img->errstr;
+            $img->write( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
+        }
 
     }elsif($_uploads->{'data'}){ #gifzo mode
         my $FFMPEG_PATH = $c->config->{external_commands}->{ffmpeg_path};
@@ -122,24 +133,34 @@ post '/' => sub {
         }
 
         my $content_type = $r->header('Content-Type');
-        my $ext = ext_from_type($content_type);
-        $ext = ".$ext" if $ext;
+        my $type = ext_from_type($content_type);
+        $type = ".$type" if $type;
 
-        if(!$ext){
+        if(!$type){
             my $_url = $url;
             $_url =~ s/#.*$//;
             $_url =~ s/^.*\///;
-            my ($fn, $path, $type) = fileparse( $_url, qr/\.[^\.]+$/ );
-            $ext = $type;
+            my ($fn, $path, $_type) = fileparse( $_url, qr/\.[^\.]+$/ );
+            $type = $_type;
         }
 
-        $filename = Pyazo2::randstr() . $ext;
+        $filename = Pyazo2::randstr().$type;
 
         $url = $c->req->param('fileurl');
-        $r = $ua->mirror($url, $c->base_dir.'/image/'. $filename);
+        my $dist_path = path($c->base_dir.'/image/'. $filename)->realpath;
+        $r = $ua->mirror($url, $dist_path);
+        
         return $c->create_simple_status_page('500', 'error: get fail') unless $r;
 
         $filename = 'image/'.$filename;
+        
+        # fix jpeg orientation
+        if(lc($type) eq '.jpg' || lc($type) eq '.jpeg'){ 
+            my $img = Imager->new;
+            $img->read( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
+            $img->filter( type => 'exif_orientation' ) or die $img->errstr;
+            $img->write( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
+        }
     }
     return $c->create_simple_status_page('500', 'error: blank post') unless $filename;
     return $c->create_response(200, ['Content-Type' => 'text/plain'], [$c->req->base().$filename]);

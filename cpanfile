@@ -23,6 +23,11 @@ requires 'Media::Type::Simple';
 requires 'LWP::UserAgent';
 requires 'Path::Tiny';
 requires 'File::Temp';
+requires 'Imager';
+requires 'Imager::ExifOrientation';
+requires 'Imager::File::JPEG';
+requires 'Imager::File::GIF';
+requires 'Imager::File::PNG';
 
 
 on configure => sub {
