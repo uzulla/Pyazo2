@@ -19,5 +19,6 @@ my $dbpath = File::Spec->catfile($basedir, 'db', 'development.db');
         "frame_rate" => 3,
         "frame_delay" => 10,
         "allow_cross_site_domain" => "*",
+        "auto_resize_max_px" => 1200,
     }
 };

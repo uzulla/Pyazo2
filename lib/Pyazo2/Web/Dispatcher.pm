@@ -47,6 +47,7 @@ post '/' => sub {
     my $filename;
     my $upload;
     my $_uploads = $c->req->uploads;
+    my $MAX_PX = $c->config->{settings}->{auto_resize_max_px};
 
     if($_uploads->{'imagedata'}){ #pyazo mode
         $upload = $_uploads->{'imagedata'};
@@ -58,17 +59,39 @@ post '/' => sub {
             }
             $type = '.'.$img_info->{file_type};
         }
+        
+        $type = lc($type);
 
-        $filename = "image/" . Pyazo2::randstr() . lc($type);
+        $filename = "image/" . Pyazo2::randstr().$type;
         my $dist_path = path($c->base_dir.'/'.$filename)->realpath;
         path($upload->path)->move($dist_path);
 
         # fix jpeg orientation
-        if(lc($type) eq '.jpg' || lc($type) eq '.jpeg'){ 
+        if($type eq '.jpg' || $type eq '.jpeg'){ 
             my $img = Imager->new;
             $img->read( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
             $img->filter( type => 'exif_orientation' ) or die $img->errstr;
             $img->write( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
+        }
+
+        # auto resize
+        if(
+            $c->req->param('auto_resize') eq "1" &&
+            ($type eq '.jpg' || $type eq '.jpeg' || $type eq '.gif' || $type eq '.png')
+        ){ 
+            my $img = Imager->new;
+            $img->read( file => $dist_path ) or die $img->errstr;
+            my $x = $img->getwidth();
+            my $y = $img->getheight();
+            my $long_side_px = ($x>$y) ? $x : $y;
+            if($long_side_px>$MAX_PX){
+                $img = $img->scale(
+                    xpixels => $MAX_PX,
+                    ypixels => $MAX_PX,
+                    type    => 'min',
+                ) or die $img->errstr;
+                $img->write( file => $dist_path ) or die $img->errstr;
+            }
         }
 
         chmod 0666, $dist_path;
@@ -163,6 +186,26 @@ post '/' => sub {
             $img->write( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
         }
         
+        # auto resize
+        if(
+            $c->req->param('auto_resize') eq "1" &&
+            ($type eq '.jpg' || $type eq '.jpeg' || $type eq '.gif' || $type eq '.png')
+        ){ 
+            my $img = Imager->new;
+            $img->read( file => $dist_path ) or die $img->errstr;
+            my $x = $img->getwidth();
+            my $y = $img->getheight();
+            my $long_side_px = ($x>$y) ? $x : $y;
+            if($long_side_px>$MAX_PX){
+                $img = $img->scale(
+                    xpixels => $MAX_PX,
+                    ypixels => $MAX_PX,
+                    type    => 'min',
+                ) or die $img->errstr;
+                $img->write( file => $dist_path ) or die $img->errstr;
+            }
+        }
+
         chmod 0666, $dist_path;
     }
     return $c->create_simple_status_page('500', 'error: blank post') unless $filename;

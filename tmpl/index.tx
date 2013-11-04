@@ -10,6 +10,12 @@
                 <label>Image(or more) File</label>
                 <input type='file' name='imagedata'>
             </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="auto_resize" value="1" checked>
+                    Auto resize to max 1200px (jpg,png,gif only)
+                </label>
+            </div>
             <button type="submit" class="btn btn-default">upload</button>
         </form>
         <hr>
@@ -101,6 +107,12 @@
             <div class="form-group">
                 <label>Image(or more) File URL</label><br>
                 <input type='text' name='fileurl' style="width:100%">
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="auto_resize" value="1" checked>
+                    Auto resize to max 1200px (jpg,png,gif only)
+                </label>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
