@@ -71,6 +71,7 @@ post '/' => sub {
             $img->write( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
         }
 
+        chmod 0666, $dist_path;
     }elsif($_uploads->{'data'}){ #gifzo mode
         my $FFMPEG_PATH = $c->config->{external_commands}->{ffmpeg_path};
         my $GIFSICLE_PATH = $c->config->{external_commands}->{gifsicle_path};
@@ -117,7 +118,8 @@ post '/' => sub {
         path($outgif)->move($c->base_dir.'/' . $giffilename);
         my $mp4filename = "image/" . $randstr . ".mp4";
         path($upload->path)->move($c->base_dir.'/' . $mp4filename);
-
+        chmod 0666, $c->base_dir.'/' . $giffilename;
+        chmod 0666, $c->base_dir.'/' . $mp4filename;
         $filename = $giffilename;
     }elsif( $c->req->param('fileurl') ){
         my $url = $c->req->param('fileurl');
@@ -151,7 +153,6 @@ post '/' => sub {
         $r = $ua->mirror($url, $dist_path);
         
         return $c->create_simple_status_page('500', 'error: get fail') unless $r;
-
         $filename = 'image/'.$filename;
         
         # fix jpeg orientation
@@ -161,6 +162,8 @@ post '/' => sub {
             $img->filter( type => 'exif_orientation' ) or die $img->errstr;
             $img->write( file => $dist_path, type=>'jpeg' ) or die $img->errstr;
         }
+        
+        chmod 0666, $dist_path;
     }
     return $c->create_simple_status_page('500', 'error: blank post') unless $filename;
     return $c->create_response(200, ['Content-Type' => 'text/plain'], [$c->req->base().$filename]);
