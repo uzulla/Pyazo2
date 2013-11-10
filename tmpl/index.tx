@@ -52,8 +52,10 @@
             function handleFileSelect(e) {
                 e.stopPropagation();
                 e.preventDefault();
-                $(e.target).removeClass('on');
-                $(e.target).addClass('send');
+
+                targetElm = (e.target) ? e.target : e.srcElement;
+                $(targetElm).removeClass('on');
+                $(targetElm).addClass('send');
 
                 var files = e.dataTransfer.files; // FileList object.
 
@@ -64,6 +66,11 @@
 
                 var data = new FormData();
                 data.append('imagedata', files[0]);
+
+                var auto_resize = $("input[name=auto_resize]", targetElm).val();
+                data.append('auto_resize', auto_resize);
+                var auto_resize_for = $("input[name=auto_resize_for]:checked", targetElm).val();
+                data.append('auto_resize_for', auto_resize_for);
 
                 $.ajax({
                     url: "/",
