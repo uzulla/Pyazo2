@@ -79,15 +79,23 @@ post '/' => sub {
             $c->req->param('auto_resize') eq "1" &&
             ($type eq '.jpg' || $type eq '.jpeg' || $type eq '.gif' || $type eq '.png')
         ){ 
+            my $width;
+            my $height;
+            if($c->req->param('auto_resize_for') eq 'yancha_avatar'){
+                $width = 48;
+                $height = 48;
+            }else{
+                $width = $c->req->param('width') // $MAX_PX;
+                $height = $c->req->param('height') // $MAX_PX;
+            }
             my $img = Imager->new;
             $img->read( file => $dist_path ) or die $img->errstr;
             my $x = $img->getwidth();
             my $y = $img->getheight();
-            my $long_side_px = ($x>$y) ? $x : $y;
-            if($long_side_px>$MAX_PX){
+            if($x>$width || $y>$height){
                 $img = $img->scale(
-                    xpixels => $MAX_PX,
-                    ypixels => $MAX_PX,
+                    xpixels => $width,
+                    ypixels => $height,
                     type    => 'min',
                 ) or die $img->errstr;
                 $img->write( file => $dist_path ) or die $img->errstr;
@@ -191,15 +199,23 @@ post '/' => sub {
             $c->req->param('auto_resize') eq "1" &&
             ($type eq '.jpg' || $type eq '.jpeg' || $type eq '.gif' || $type eq '.png')
         ){ 
+            my $width;
+            my $height;
+            if($c->req->param('auto_resize_for') eq 'yancha_avatar'){
+                $width = 48;
+                $height = 48;
+            }else{
+                $width = $c->req->param('width') // $MAX_PX;
+                $height = $c->req->param('height') // $MAX_PX;
+            }
             my $img = Imager->new;
             $img->read( file => $dist_path ) or die $img->errstr;
             my $x = $img->getwidth();
             my $y = $img->getheight();
-            my $long_side_px = ($x>$y) ? $x : $y;
-            if($long_side_px>$MAX_PX){
+            if($x>$width || $y>$height){
                 $img = $img->scale(
-                    xpixels => $MAX_PX,
-                    ypixels => $MAX_PX,
+                    xpixels => $width,
+                    ypixels => $height,
                     type    => 'min',
                 ) or die $img->errstr;
                 $img->write( file => $dist_path ) or die $img->errstr;

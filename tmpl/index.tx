@@ -13,8 +13,16 @@
             <div class="form-group">
                 <label>
                     <input type="checkbox" name="auto_resize" value="1" checked>
-                    Auto resize to max 1200px (jpg,png,gif only)
+                    Auto resize (jpg,png,gif only)
                 </label>
+                <div>pattern:
+                    <label>
+                        <input type="radio" name="auto_resize_for" value="" checked>max 1200px
+                    </label>
+                    <label>
+                        <input type="radio" name="auto_resize_for" value="yancha_avatar">yancha_avatar
+                    </label>
+                </div>
             </div>
             <button type="submit" class="btn btn-default">upload</button>
         </form>
@@ -111,8 +119,16 @@
             <div class="form-group">
                 <label>
                     <input type="checkbox" name="auto_resize" value="1" checked>
-                    Auto resize to max 1200px (jpg,png,gif only)
+                    Auto resize (jpg,png,gif only)
                 </label>
+                <div>pattern:
+                    <label>
+                        <input type="radio" name="auto_resize_for" value="" checked>max 1200px
+                    </label>
+                    <label>
+                        <input type="radio" name="auto_resize_for" value="yancha_avatar">yancha_avatar
+                    </label>
+                </div>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
