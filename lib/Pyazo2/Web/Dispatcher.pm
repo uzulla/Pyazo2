@@ -111,6 +111,7 @@ post '/' => sub {
         my $USE_GIF = $c->config->{settings}->{force_use_gif_in_temporary};
         my $FPS = $c->config->{settings}->{frame_rate};
         my $FRAME_DELAY = $c->config->{settings}->{frame_delay};
+        my $EXTRA_FFMPEG_OPT = $c->config->{settings}->{extra_ffmpeg_opt};
 
         $c->create_simple_status_page('500', "require FFMPEG_PATH in config") unless $FFMPEG_PATH;
         $c->create_simple_status_page('500', "require IM_CONVERT_PATH or GIFSICLE_PATH in config") unless(
@@ -129,7 +130,7 @@ post '/' => sub {
 
         my $movfilename = $upload->tempname;
 
-        my $execline = "${FFMPEG_PATH} -i $movfilename -r $FPS $tmpdirpath/%05d.$temporary_format";
+        my $execline = "${FFMPEG_PATH} -i $movfilename -r $FPS $EXTRA_FFMPEG_OPT -f image2 $tmpdirpath/%05d.$temporary_format";
         say $execline;
         `$execline`;
 
