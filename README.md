@@ -50,7 +50,7 @@ using scaling option(vh).
 how to use with Mac Gifzo client
 ================================
 
-{Gifzo Client - https://github.com/cockscomb/Gifzo.app}(https://github.com/cockscomb/Gifzo.app)
+[Gifzo Client - https://github.com/cockscomb/Gifzo.app](https://github.com/cockscomb/Gifzo.app)
 
 set settings.
 
