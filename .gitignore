@@ -19,3 +19,4 @@ MYMETA.yml
 /image/
 !/image/.gitkeep
 
+/config/development.pl
