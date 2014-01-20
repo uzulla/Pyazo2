@@ -20,7 +20,5 @@ my $dbpath = File::Spec->catfile($basedir, 'db', 'development.db');
         "frame_delay" => 10,
         "allow_cross_site_domain" => "*",
         "auto_resize_max_px" => 1200,
-        # this is magic for gif_temporary (force_use_gif_in_temporary or use gifsicle) ffmpeg broken gif. old ffmpeg is not support -vf. (tested by 1.2.6)
-        # "extra_ffmpeg_opt" => " -vf \"scale=trunc(in_w/2)*2+1:trunc(in_h/2)*2+1\" ",
     }
 }

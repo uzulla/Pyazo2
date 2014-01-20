@@ -148,8 +148,25 @@
     <div class="panel-body">
         <form role="form" action="/" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label>Image(or more) File URL</label>
+                <label>MP4 File</label>
                 <input type='file' name='data'>
+            </div>
+            <div class="form-group">
+                <div>pattern:
+                    <label>
+                        <input type="radio" name="auto_resize_for" value="1">actual size(big)
+                    </label>
+                    <label>
+                        <input type="radio" name="auto_resize_for" value="2" checked>half size
+                    </label>
+                    <label>
+                        <input type="radio" name="auto_resize_for" value="">quarter size
+                    </label>
+                    <label>
+                        <input type="radio" name="auto_resize_for" value="8">1/8 size
+                    </label>
+
+                </div>
             </div>
             <button type="submit" class="btn btn-default">upload</button>
         </form>
