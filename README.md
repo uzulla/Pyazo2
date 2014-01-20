@@ -3,14 +3,17 @@ Pyazo2
 
 Gyazo and Gifzo compatible server by perl
 
-
 install and run
 ====
 
 ```
 carton install 
+cp config/development.pl.sample config/development.pl
 vi config/development.pl # if you use Gifzo compatible.
 carton exec plackup script/pyazo2-server
+
+# or create config/production.pl
+# carton exec plackup script/pyazo2-server -E production
 ```
 
 how to use with Mac gyazo client
@@ -36,6 +39,12 @@ Gifzo compatible is optional.
 
 If you want use Gifzo compatible, You must install ffmpeg and gifsicle or (ImageMagick( or YoyaMagick)).
 
+
+## require ffmpeg >= 1.2.x
+
+using scaling option(vh).
+
+> see also static build. http://johnvansickle.com/ffmpeg/
 
 config options
 ====
