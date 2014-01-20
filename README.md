@@ -46,6 +46,37 @@ using scaling option(vh).
 
 > see also static build. http://johnvansickle.com/ffmpeg/
 
+
+how to use with Mac Gifzo client
+================================
+
+{Gifzo Client - https://github.com/cockscomb/Gifzo.app}(https://github.com/cockscomb/Gifzo.app)
+
+set settings.
+
+```
+$ defaults write net.gifzo.Gifzo url -string "http://your_pyazo_2/"
+```
+
+check settings.
+
+```
+$  defaults read net.gifzo.Gifzo
+{
+    url = "http://your_pyazo_2/";
+}
+```
+
+back to default.
+
+```
+$ defaults delete net.gifzo.Gifzo"
+```
+
+(Huh? Windows? I dont know...)
+
+
+
 config options
 ====
 
