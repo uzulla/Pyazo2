@@ -17,7 +17,10 @@
                 </label>
                 <div>pattern:
                     <label>
-                        <input type="radio" name="auto_resize_for" value="" checked>max 1200px
+                        <input type="radio" name="auto_resize_for" value="" checked>
+                        max
+                        width <input name="width" value="500" style="width:50px">px
+                        height <input name="height" value="500" style="width:50px">px
                     </label>
                     <label>
                         <input type="radio" name="auto_resize_for" value="yancha_avatar">yancha_avatar
@@ -130,7 +133,10 @@
                 </label>
                 <div>pattern:
                     <label>
-                        <input type="radio" name="auto_resize_for" value="" checked>max 1200px
+                        <input type="radio" name="auto_resize_for" value="" checked>
+                        max
+                        width <input name="width" value="500" style="width:50px">px
+                        height <input name="height" value="500" style="width:50px">px
                     </label>
                     <label>
                         <input type="radio" name="auto_resize_for" value="yancha_avatar">yancha_avatar
