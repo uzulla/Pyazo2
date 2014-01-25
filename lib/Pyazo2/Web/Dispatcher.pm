@@ -202,6 +202,7 @@ post '/' => sub {
         
         # auto resize
         if(
+            defined $c->req->param('auto_resize') && 
             $c->req->param('auto_resize') eq "1" &&
             ($type eq '.jpg' || $type eq '.jpeg' || $type eq '.gif' || $type eq '.png')
         ){ 
