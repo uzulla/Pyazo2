@@ -75,20 +75,20 @@ post '/' => sub {
         }
 
         # auto resize
+        my $auto_resize = $c->req->param('auto_resize') // ''; 
         if(
-            $c->req->param('auto_resize') &&
-            $c->req->param('auto_resize') eq "1" &&
+            $auto_resize eq "1" &&
             ($type eq '.jpg' || $type eq '.jpeg' || $type eq '.gif' || $type eq '.png')
         ){ 
-            my $width;
-            my $height;
-            if($c->req->param('auto_resize_for') eq 'yancha_avatar'){
+            my $width = $c->req->param('width') // $MAX_PX;
+            my $height = $c->req->param('height') // $MAX_PX;
+
+            my $auto_resize_for = $c->req->param('auto_resize_for') // '';
+            if($auto_resize_for eq 'yancha_avatar'){
                 $width = 48;
                 $height = 48;
-            }else{
-                $width = $c->req->param('width') // $MAX_PX;
-                $height = $c->req->param('height') // $MAX_PX;
             }
+
             my $img = Imager->new;
             $img->read( file => $dist_path ) or die $img->errstr;
             my $x = $img->getwidth();
