@@ -208,7 +208,7 @@ post '/' => sub {
         ){ 
             my $width;
             my $height;
-            my $auto_resize_for = c->req->param('auto_resize_for') // '';
+            my $auto_resize_for = $c->req->param('auto_resize_for') // '';
             if($auto_resize_for eq 'yancha_avatar'){
                 $width = 48;
                 $height = 48;
